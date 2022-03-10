@@ -50,7 +50,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37736cc2497c38046bbdcf833e698ad7, type: 2}
+  - {fileID: 2100000, guid: 3220768dd1c9184429bf1399b91a51b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -509,7 +509,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37736cc2497c38046bbdcf833e698ad7, type: 2}
+  - {fileID: 2100000, guid: 3220768dd1c9184429bf1399b91a51b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -718,7 +718,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37736cc2497c38046bbdcf833e698ad7, type: 2}
+  - {fileID: 2100000, guid: 3220768dd1c9184429bf1399b91a51b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -943,6 +943,8 @@ MonoBehaviour:
   controlPoints: []
   distanceToChase: 5
   distanceToAttack: 2
+  fireBallPrefab: {fileID: 0}
+  pointToShoot: {fileID: 0}
 --- !u!1 &7381347605797097745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1150,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37736cc2497c38046bbdcf833e698ad7, type: 2}
+  - {fileID: 2100000, guid: 3220768dd1c9184429bf1399b91a51b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1263,7 +1265,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fa0e9eb8b51b7a4bbeeedaedf828433, type: 2}
+  - {fileID: 2100000, guid: f277bf0976dc4454ea126c5c380b3945, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

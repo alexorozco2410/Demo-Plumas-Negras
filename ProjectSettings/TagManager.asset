@@ -6,6 +6,11 @@ TagManager:
   tags:
   - PlayerGun
   - enemy1
+  - enemyManager
+  - ItemFeather
+  - finalBoss
+  - spawnBoss
+  - finalCanvas
   layers:
   - Default
   - TransparentFX

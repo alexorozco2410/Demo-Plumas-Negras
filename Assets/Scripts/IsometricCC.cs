@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class IsometricCC : MonoBehaviour
 {
@@ -19,12 +20,16 @@ public class IsometricCC : MonoBehaviour
     public GameObject Gun;
 
     private bool isActiveAbE = true;
-    private float coolDownE = 10;
+    private float coolDownE = 6;
     private float startCoolDownE = -1;
 
     private bool isActiveAbQ = true;
     private float coolDownQ = 1;
     private float startCoolDownQ = -1;
+
+    private float startCoolDownG = -1;
+    private float coolDownG = 15;
+    private bool isActiveAbG = true;
 
     ThrowBalloon ThrowBalloonScript;
 
@@ -38,12 +43,36 @@ public class IsometricCC : MonoBehaviour
 
     public GameObject playeUIObj;
     PlayerUI playerUIScript;
+    PlayerHealth playerHealthScript;
+
+    //items
+    private int waterBottle = 1;
+    private int waterGlobes = 1;
+    private int itemFeather = 0;
+
+    public Text feathersText;
+    public Text bottleText;
+    public Text globeText;
+    public Text totalFeathers;
+    public Text totalGlobes;
+    public Text totalBottles;
+
+    // audio attacks
+    public AudioSource sourceShoot;
+    public AudioClip clipShootWater;
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         ThrowBalloonScript = this.gameObject.GetComponent<ThrowBalloon>();
         playerUIScript = playeUIObj.GetComponent<PlayerUI>();
+        playerHealthScript = this.gameObject.GetComponent<PlayerHealth>();
+        bottleText.text = waterBottle.ToString();
+        feathersText.text = itemFeather.ToString();
+        globeText.text = waterGlobes.ToString();
+        totalFeathers.text = itemFeather.ToString();
+        totalGlobes.text = waterGlobes.ToString();
+        totalBottles.text = waterBottle.ToString();
     }
     void Update()
     {
@@ -58,6 +87,7 @@ public class IsometricCC : MonoBehaviour
         // aplyRot();
         ResetCooldownE();
         ResetCooldownQ();
+        ResetCooldownG();
         if (setColliderHeight){
             playerCapsuleCollider.height = anim.GetFloat("HeightCollider");
         }
@@ -146,6 +176,7 @@ public class IsometricCC : MonoBehaviour
                 anim.SetBool("isThrowing", true);
                 playerUIScript.activeAbilityR = false;
                 playerUIScript.targetPoint.SetActive(false);
+                UsedWatterGlobe();
             }
         }
     }
@@ -188,15 +219,19 @@ public class IsometricCC : MonoBehaviour
                 // Debug.Log("mouse position " + Input.mousePosition);
                 // Debug.Log("position: " + cam.ScreenToWorldPoint(Input.mousePosition));
             }
-            if (Input.GetKeyDown("g") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Drinking")) {
+            if (Input.GetKeyDown("g") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Drinking") && isActiveAbG && playerHealthScript.health < 100 && waterBottle > 0) {
                 
+                    startCoolDownG = 0;
+                    isActiveAbG = false;
                     anim.SetBool("Moving", false);
                     anim.SetBool("CanMove", false);
                     //anim.SetTrigger("Healing");
                     anim.SetBool("isHealing", true);
+                    playerHealthScript.StartHealing();
+                    UsedWatterBottle();
                 
             }
-            if (Input.GetKeyDown("r") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Toss Grenade 1")) { 
+            if (Input.GetKeyDown("r") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Toss Grenade 1") && waterGlobes > 0) { 
 
                     playerUIScript.activeAbilityR = true;
                     playerUIScript.targetPoint.SetActive(true);
@@ -235,6 +270,12 @@ public class IsometricCC : MonoBehaviour
             }
             //    exit.SetActive(true);
             // this.gameObject.SetActive(false);
+        }
+         if (other.gameObject.tag.Equals("ItemFeather")) {
+            if (Input.GetKey("f")) {
+                AddItemFeather();
+                Destroy(other.gameObject);
+            }
         }
     }
 
@@ -283,6 +324,16 @@ public class IsometricCC : MonoBehaviour
         }
     }
 
+    public void ResetCooldownG() {
+        if (startCoolDownG != -1) {
+            startCoolDownG += 1 * Time.deltaTime;
+            if (startCoolDownG > coolDownG) {
+                isActiveAbG = true;
+                startCoolDownG = -1;
+            }
+        }
+    }
+
     public void ThrowingBalloon(Vector3 position) {
         ThrowBalloonScript.setPositionObjective(position);
     }
@@ -307,6 +358,50 @@ public class IsometricCC : MonoBehaviour
                                                     ForceMode.Impulse);
     }
 
+    private void UsedWatterBottle () {
+        waterBottle -= 1;
+        bottleText.text = waterBottle.ToString();
+        totalBottles.text = waterBottle.ToString();
+    }
+    private void AddWatterBottle () {
+        waterBottle += 1;
+        bottleText.text = waterBottle.ToString();
+        totalBottles.text = waterBottle.ToString();
+    }
+    private void UsedWatterGlobe () {
+        waterGlobes -= 1;
+        globeText.text = waterGlobes.ToString();
+        totalGlobes.text = waterGlobes.ToString();
+    }
+    private void AddWatterGlobe () {
+        waterGlobes += 1;
+        globeText.text = waterGlobes.ToString();
+        totalGlobes.text = waterGlobes.ToString();
+    }
+    private void AddItemFeather () {
+        itemFeather += 1;
+        feathersText.text = itemFeather.ToString();
+        totalFeathers.text = itemFeather.ToString();
+    }
+
+    public void BuyGlobe () {
+        if (itemFeather >= 3) {
+            itemFeather -= 3;
+            feathersText.text = itemFeather.ToString();
+            totalFeathers.text = itemFeather.ToString();
+            AddWatterGlobe();
+        }
+    }
+
+    public void BuyBottle() {
+        if (itemFeather >= 5) {
+            itemFeather -= 5;
+            feathersText.text = itemFeather.ToString();
+            totalFeathers.text = itemFeather.ToString();
+            AddWatterBottle();
+        }
+    }
+
     public void ShootBubbleBean(){
         // Vector3 directionFB = Vector3.Normalize( new Vector3(player.position.x - pointToShoot.position.x, 0, player.position.z - pointToShoot.position.z) );
         // Vector3 directionWater = pointToShoot.forward;
@@ -316,6 +411,7 @@ public class IsometricCC : MonoBehaviour
         //                                            shootForce, 
         //                                            ForceMode.Impulse);
         bubbleBean.Play();
+        sourceShoot.PlayOneShot(clipShootWater);
     }
 }
     // Update is called once per frame

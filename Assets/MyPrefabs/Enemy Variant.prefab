@@ -368,7 +368,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 594083486327632307, guid: 8403075ff850f0b42bd725748213b130, type: 3}
       propertyPath: m_Speed
-      value: 2
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 594083486327632307, guid: 8403075ff850f0b42bd725748213b130, type: 3}
       propertyPath: m_Enabled
@@ -754,3 +754,5 @@ MonoBehaviour:
   maxHealth: 0
   noTakeDamage: 0
   healthBar: {fileID: 823252515}
+  managerEnemies: {fileID: 0}
+  itemFeather: {fileID: 1471668243684974168, guid: 2ec9c0c5da9b4e84aa72721bb33e73d8, type: 3}

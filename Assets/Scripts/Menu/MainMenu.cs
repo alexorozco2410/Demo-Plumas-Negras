@@ -36,6 +36,10 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void CloseGame () {
+        Application.Quit();
+    }
+
     /*public void ShowMainPanel(){
         PanelControls.SetActive(false);
         PrincipalPanel.SetActive(true);
